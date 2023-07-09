@@ -31,6 +31,8 @@ const articleRouter=require('./routes/articleRoute')
 app.use("/api/v1",articleRouter)
 const leaderboardRouter=require('./routes/leaderboardRoute')
 app.use("/api/v1",leaderboardRouter)
+const orderRouter=require('./routes/orderRoute')
+app.use('/api/v1',orderRouter)
 app.listen(port,()=>{
     console.log(`connected at ${port}`)
 })
