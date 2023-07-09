@@ -18,15 +18,28 @@ exports.article=async(req,res)=>{
         const file=req.files.image
         let arr=[]
         // console.log(file)
-         file.map((elem)=>{
-            cloudinary.uploader.upload(elem.tempFilePath,{
-                folder:'articleImages',
-                crop:"scale"
-            }).then((result)=>{
-                console.log(result)
-                arr.push(result.secure_url)
-            })
-    })
+//          file.map((elem)=>{
+//             cloudinary.uploader.upload(elem.tempFilePath,{
+//                 folder:'articleImages',
+//                 crop:"scale"
+//             }).then((result)=>{
+//                 console.log(result)
+//                 arr.push(result.secure_url)
+//             })
+        
+            
+// })
+let i;
+for(i=0;i<file.length;i++)
+{
+    cloudinary.uploader.upload(file[i].tempFilePath,{
+                        folder:'articleImages',
+                        crop:"scale"
+                    }).then((result)=>{
+                        console.log(result)
+                        arr.push(result.secure_url)
+                    })
+}
         console.log("hello world")
      const article=await Article.create({
         title,
