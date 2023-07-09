@@ -1,6 +1,6 @@
 const mongoose=require('mongoose')
 const orderSchema=new mongoose.Schema({
-    news_paper:{
+    newspaper:{
         type:Number,
         default:0
     },
@@ -16,7 +16,7 @@ const orderSchema=new mongoose.Schema({
         type:Number,
         default:0
     },
-    office_paper:{
+    paper:{
         type:Number,
         default:0
     },
@@ -28,7 +28,7 @@ const orderSchema=new mongoose.Schema({
         type:Number,
         default:0
     },
-    plastic_bottle:{
+    bottle:{
         type:Number,
         default:0
     },
@@ -36,5 +36,13 @@ const orderSchema=new mongoose.Schema({
         type:mongoose.Schema.Types.ObjectId,
         ref:'User'
     },
+    status:{
+        type:Number,
+        default:0
+    },
+    totalQuantity:{
+        type:Number,
+        default:0
+    }
 })
 module.exports=mongoose.model("Order",orderSchema)
