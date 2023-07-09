@@ -27,6 +27,9 @@ app.set('view engine','ejs')
 app.get('/testing',(req,res)=>{
     res.render('postForm')
 })
+const articleRouter=require('./routes/articleRoute')
+app.use("/api/v1",articleRouter)
+
 app.listen(port,()=>{
     console.log(`connected at ${port}`)
 })
