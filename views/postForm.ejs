@@ -14,11 +14,11 @@
     <title>Document</title>
 </head>
 <body>
-    <form action="/api/v1/signup" method="post" enctype="multipart/form-data">
-        <input name="name" placeholder="name" type="text"/>
-        <input name="email" placeholder="email" type="email"/>
+    <form action="/api/v1/article" method="post" enctype="multipart/form-data">
+        <input name="title" placeholder="title" type="text"/>
+        <input name="content" placeholder="content" type="text"/>
         <input name="password" placeholder="password" type="text"/>
-        <input name="profile" type="file" />
+        <input name="image" multiple  type="file" />
         <input name="phone_no" placeholder="phone_no" type="text"/>
         <button type="submit">Submit</button>
     </form>

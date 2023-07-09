@@ -1,5 +1,6 @@
 const User=require("../models/userModel")
 const cloudinary=require('cloudinary').v2
+const bcrypt=require('bcryptjs')
 exports.createUser=async(req,res)=>{
 
     try {
@@ -35,9 +36,10 @@ exports.createUser=async(req,res)=>{
                 secure_url:result.secure_url
             }
         })
+        user.password=undefined
         res.status(201).json({
-            success:true,
-            user
+            result:true,
+            id:user._id
         })
     } catch (error) {
         res.status(201).json({
@@ -45,6 +47,42 @@ exports.createUser=async(req,res)=>{
             error
         })
     }
-
-
+}
+exports.loginUser=async(req,res)=>{
+     const {email,password}=req.body
+     try{
+     if(!email || !password){
+        res.json({
+            result:false
+        })
+     }
+     else{
+        User.find({email}).then(async(data)=>{
+            if(data.length===0){
+                res.json({
+                    result:false
+                })
+            }
+            else{
+                const result=await bcrypt.compare(password,data[0].password)
+                if(result==true){
+                    res.json({
+                        result:true,
+                        id:data[0]._id
+                    })
+                }
+                else{
+                    res.json({
+                        result:false
+                    })
+                }
+            }
+        })
+     }
+    }
+    catch(err){
+      res.josn({
+        result:"Server error"
+      })
+    }
 }
