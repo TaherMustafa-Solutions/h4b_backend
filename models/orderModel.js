@@ -1,0 +1,40 @@
+const mongoose=require('mongoose')
+const orderSchema=new mongoose.Schema({
+    news_paper:{
+        type:Number,
+        default:0
+    },
+    cardboard:{
+        type:Number,
+        default:0
+    },
+    aluminium:{
+        type:Number,
+        default:0
+    },
+    iron:{
+        type:Number,
+        default:0
+    },
+    office_paper:{
+        type:Number,
+        default:0
+    },
+    book:{
+        type:Number,
+        default:0
+    },
+    magazine:{
+        type:Number,
+        default:0
+    },
+    plastic_bottle:{
+        type:Number,
+        default:0
+    },
+    userId:{
+        type:mongoose.Schema.Types.ObjectId,
+        ref:'User'
+    },
+})
+module.exports=mongoose.model("Order",orderSchema)
