@@ -1,36 +1,85 @@
 const mongoose=require('mongoose')
 const orderSchema=new mongoose.Schema({
     newspaper:{
-        type:Number,
-        default:0
+        weight:{
+            type:Number,
+            default:0,
+        },
+        rate:{
+            type:Number,
+            default:0
+        }
     },
+   
     cardboard:{
-        type:Number,
-        default:0
+        weight:{
+            type:Number,
+            default:0,
+        },
+        rate:{
+            type:Number,
+            default:0
+        }
     },
-    aluminium:{
-        type:Number,
-        default:0
+    aluminum:{
+        weight:{
+            type:Number,
+            default:0,
+        },
+        rate:{
+            type:Number,
+            default:0
+        }
     },
     iron:{
-        type:Number,
-        default:0
+        weight:{
+            type:Number,
+            default:0,
+        },
+        rate:{
+            type:Number,
+            default:0
+        }
     },
     paper:{
-        type:Number,
-        default:0
+        weight:{
+            type:Number,
+            default:0,
+        },
+        rate:{
+            type:Number,
+            default:0
+        }
     },
     book:{
-        type:Number,
-        default:0
+        weight:{
+            type:Number,
+            default:0,
+        },
+        rate:{
+            type:Number,
+            default:0
+        }
     },
     magazine:{
-        type:Number,
-        default:0
+        weight:{
+            type:Number,
+            default:0,
+        },
+        rate:{
+            type:Number,
+            default:0
+        }
     },
-    bottle:{
-        type:Number,
-        default:0
+    plastic:{
+        weight:{
+            type:Number,
+            default:0,
+        },
+        rate:{
+            type:Number,
+            default:0
+        }
     },
     userId:{
         type:mongoose.Schema.Types.ObjectId,
