@@ -28,11 +28,11 @@ const user=new mongoose.Schema({
 photo:{
     id:{
         type:String,
-        // required:true
-    },
+         default:'users/kyu8aezxo4hgsmdnqwbj.png'  
+},
     secure_url:{
         type:String,
-        // required:true
+        default:'https://res.cloudinary.com/dsxcazh94/image/upload/v1688945408/users/kyu8aezxo4hgsmdnqwbj.png'
     },
    
 }, 

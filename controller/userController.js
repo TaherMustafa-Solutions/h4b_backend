@@ -19,7 +19,7 @@ exports.createUser=async(req,res)=>{
                 error:"require all element"
             })
         }
-        const file=req.files.profile
+        const file=req.photo
         result=await cloudinary.uploader.upload(file.tempFilePath,{
             folder:'users',
             width:150,
@@ -39,7 +39,8 @@ exports.createUser=async(req,res)=>{
         user.password=undefined
         res.status(201).json({
             result:true,
-            id:user._id
+            id:user._id,
+            file
         })
     } catch (error) {
         res.status(201).json({
@@ -88,4 +89,18 @@ exports.loginUser=async(req,res)=>{
         result:"Server error"
       })
     }
+}
+exports.userinfo=(req,res)=>{
+    const _id=req.params.id
+    User.find({_id}).then((data)=>{
+        res.json({
+            result:true,
+            data:data[0],
+        })
+    }).catch((err)=>{
+        res.json({
+            result:false,
+            err
+        })
+    })
 }
