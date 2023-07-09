@@ -53,14 +53,16 @@ exports.loginUser=async(req,res)=>{
      try{
      if(!email || !password){
         res.json({
-            result:false
+            result:false,
+            message:"Email or Password Missing"
         })
      }
      else{
         User.find({email}).then(async(data)=>{
             if(data.length===0){
                 res.json({
-                    result:false
+                    result:false,
+                    message:"not_found"
                 })
             }
             else{
@@ -73,7 +75,8 @@ exports.loginUser=async(req,res)=>{
                 }
                 else{
                     res.json({
-                        result:false
+                        result:false,
+                        message:"wrong_password"
                     })
                 }
             }
