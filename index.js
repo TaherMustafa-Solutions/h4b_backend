@@ -29,7 +29,8 @@ app.get('/testing',(req,res)=>{
 })
 const articleRouter=require('./routes/articleRoute')
 app.use("/api/v1",articleRouter)
-
+const leaderboardRouter=require('./routes/leaderboardRoute')
+app.use("/api/v1",leaderboardRouter)
 app.listen(port,()=>{
     console.log(`connected at ${port}`)
 })
