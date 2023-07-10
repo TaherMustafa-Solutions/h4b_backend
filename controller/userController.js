@@ -95,7 +95,7 @@ catch(err){
 }
 exports.userinfo=(req,res)=>{
     const userId=req.params.id
-    Order.find({userId}).populate('userId').then((data)=>{
+    Order.find({userId,status:1}).populate('userId').then((data)=>{
         if(data.length===0){
             let newspaper=0,magazine=0,cardboard=0,book=0,plastic=0,aluminum=0,iron=0,paper=0;
            User.find({_id:userId}).select("name address email mobile phone_no").then((data1)=>{
@@ -106,6 +106,7 @@ exports.userinfo=(req,res)=>{
                     email:data1[0].email,
                     phone_no:data1[0].phone_no,
                     address:data1[0].address,
+                    image_url:data1[0].profile.secure_url,
                     newspaper,
                     magazine,
                     cardboard,
@@ -143,6 +144,7 @@ exports.userinfo=(req,res)=>{
             email:data[0].userId.email,
             phone_no:data[0].userId.phone_no,
             address:data[0].userId.address,
+            image_url:data[0].userId.profile.secure_url,
             newspaper,
             magazine,
             cardboard,
