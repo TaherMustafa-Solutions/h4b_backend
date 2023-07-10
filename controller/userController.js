@@ -55,7 +55,8 @@ exports.loginUser=async(req,res)=>{
                 if(result==true){
                     res.json({
                         result:true,
-                        id:data[0]._id
+                        id:data[0]._id,
+                        role:data[0].role
                     })
                 }
                 else{
