@@ -79,7 +79,7 @@ exports.userinfo=(req,res)=>{
     User.find({_id}).then((data)=>{
         res.json({
             result:true,
-            data:data[0],
+            data:data[0].email,
         })
     }).catch((err)=>{
         res.json({
