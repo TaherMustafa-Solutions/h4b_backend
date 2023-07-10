@@ -57,10 +57,21 @@ exports.order=async(req,res)=>{
  
 }
 exports.orderPending=(req,res)=>{
-    Order.find({status:0}).then((data)=>{
+    Order.find({status:0}).populate('userId').then((data)=>{
+        console.log(data)
+        let arr=[]
+        data.map((elem)=>{
+            arr.push({
+               id:elem._id,
+               name:elem.userId.name,
+               phone_no:elem.userId.phone_no,
+               email:elem.userId.email,
+               address:elem.userId.address
+            })
+        })
         res.json({
             result:true,
-            data
+            data:arr
         })
     }).catch((err)=>{
         res.json({
