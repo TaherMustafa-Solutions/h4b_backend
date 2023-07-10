@@ -11,6 +11,7 @@ exports.order=async(req,res)=>{
      book=book?+book:0
      magazine=magazine?+magazine:0
      plastic=plastic?plastic:0
+     let totalQuantity=newspaper+cardboard+aluminum+iron+paper+book+magazine+plastic
      const order=await Order.create({
         newspaper:{
             weight:newspaper,
@@ -45,33 +46,48 @@ exports.order=async(req,res)=>{
             rate:10*plastic
         },
         userId,
-        totalQuantity:newspaper+cardboard+aluminum+iron+paper+book+magazine+plastic
+        totalQuantity
      })
+    
      Order.find({_id:order._id}).populate('userId').then((data)=>{
-        
-        res.json({
+        User.findOneAndUpdate({_id:userId},{recycled_weight:data[0].userId.recycled_weight+totalQuantity}).then((data1)=>{
+            console.log(data1)
+             res.json({
             result:true,
             data
         })
+        })
+       
      })
  
 }
 exports.orderPending=(req,res)=>{
     Order.find({status:0}).populate('userId').then((data)=>{
-        console.log(data)
+        // console.log(data)
         let arr=[]
+        let ord=["newspaper","magazine","paper","iron","aluminum","book","plastic","cardboard"]
+        let ord1=[]
         data.map((elem)=>{
+          ord.map((element)=>{
+            ord1.push({
+                item:element,
+                weight:elem.element.weight,
+                rate:elem.element.rate
+            })
+          })
+          console.log(ord1)
             arr.push({
                id:elem._id,
                name:elem.userId.name,
                phone_no:elem.userId.phone_no,
                email:elem.userId.email,
-               address:elem.userId.address
+               address:elem.userId.address,
+               order_item:ord1
             })
         })
         res.json({
             result:true,
-            data:arr
+            order:arr
         })
     }).catch((err)=>{
         res.json({
@@ -81,8 +97,9 @@ exports.orderPending=(req,res)=>{
     })
 }
 exports.orderPicked=(req,res)=>{
-    const {orderid}=req.body
-    Order.findOneAndUpdate({_id:orderid},{status:1}).populate("userId").then((data)=>{
+    const {orderid,status}=req.body
+    if(status===1){
+       Order.findOneAndUpdate({_id:orderid},{status:1}).populate("userId").then((data)=>{
         console.log(data)
        User.findOneAndUpdate({_id:data.userId._id},{recycled_weight:data.userId.recycled_weight+data.totalQuantity})
        .then((data1)=>{
@@ -91,5 +108,15 @@ exports.orderPicked=(req,res)=>{
         data:data
        }).catch((err)=>{})
     })
-    })
+    }) 
+    }
+    else{
+        Order.findOneAndDelete({_id:orderid}).then(()=>{
+            res.json({
+                result:true,
+                "message":"Deleted"
+            })
+        })
+    }
+    
 }
