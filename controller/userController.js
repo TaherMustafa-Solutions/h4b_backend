@@ -68,11 +68,30 @@ exports.loginUser=async(req,res)=>{
         })
      }
     }
-    catch(err){
-      res.josn({
-        result:"Server error"
-      })
+   catch (err) {
+    res.josn({
+      result: "Server error",
+    });
+  }
+};
+
+exports.getUser = async (req, res) => {
+  try {
+    const userId = req.params.id;
+    const user = await User.findOne({ _id: userId });
+    if (!user) {
+      res.json({
+        result: false,
+        message: "userId not found",
+      });
     }
+}
+catch(err){
+    res.json({
+        result:false,
+        err
+    })
+}
 }
 exports.userinfo=(req,res)=>{
     const _id=req.params.id
