@@ -1,6 +1,7 @@
 const User=require("../models/userModel")
 const cloudinary=require('cloudinary').v2
 const bcrypt=require('bcryptjs')
+const Order= require('../models/orderModel')
 exports.createUser=async(req,res)=>{
 
     try {
@@ -19,7 +20,6 @@ exports.createUser=async(req,res)=>{
             password,
             phone_no,
             address,
-           
         })
         user.password=undefined
         res.status(201).json({
@@ -94,16 +94,70 @@ catch(err){
 }
 }
 exports.userinfo=(req,res)=>{
-    const _id=req.params.id
-    User.find({_id}).then((data)=>{
-        res.json({
+    const userId=req.params.id
+    Order.find({userId}).populate('userId').then((data)=>{
+        if(data.length===0){
+            let newspaper=0,magazine=0,cardboard=0,book=0,plastic=0,aluminum=0,iron=0,paper=0;
+           User.find({_id:userId}).select("name address email mobile phone_no").then((data1)=>{
+              res.json({
+                result:true,
+                data:{
+                    name:data1[0].name,
+                    email:data1[0].email,
+                    phone_no:data1[0].phone_no,
+                    address:data1[0].address,
+                    newspaper,
+                    magazine,
+                    cardboard,
+                    book,
+                    plastic,
+                    aluminum,
+                    iron,
+                    paper
+                }
+              })
+           }).catch((err)=>{
+            res.json({
+                result:false,
+                err
+            })
+           })
+        }
+        else{
+            let newspaper=0,magazine=0,cardboard=0,book=0,plastic=0,aluminum=0,iron=0,paper=0
+           data.map((elem)=>{
+                 newspaper+=elem.newspaper.weight
+                 magazine+=elem.magazine.weight
+                 cardboard+=elem.cardboard.weight
+                 book+=elem.book.weight
+                 plastic+=elem.plastic.weight
+                 aluminum+=elem.aluminum.weight
+                 iron+=elem.iron.weight
+                 paper+=elem.paper.weight
+           })
+           res.json({
             result:true,
-            data:data[0].email,
-        })
+            ordered:true,
+            data:{
+            name:data[0].userId.name,
+            email:data[0].userId.email,
+            phone_no:data[0].userId.phone_no,
+            address:data[0].userId.address,
+            newspaper,
+            magazine,
+            cardboard,
+            book,
+            plastic,
+            aluminum,
+            iron,
+            paper
+            }
+           })
+        }
     }).catch((err)=>{
         res.json({
             result:false,
             err
         })
-    })
+       })
 }

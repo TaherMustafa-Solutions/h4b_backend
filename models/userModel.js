@@ -41,15 +41,7 @@ phone_no:{
         required:[true,"Phone no. required"],
     },
     address:{
-        city:{
-            type:String
-        },
-        pinCode:{
-            type:Number
-        },
-        street_name:{
-            type:String
-        }
+        type:String
     },
     recycled_weight:{
         type:Number,

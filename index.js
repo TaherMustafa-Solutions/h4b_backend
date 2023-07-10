@@ -14,7 +14,7 @@ cloudinary.config({
     api_key:process.env.CLOUDINARY_API_KEY,
     api_secret:process.env.CLOUDINARY_API_SECRET
 })
-conectdatabase();
+conectdatabase()
 app.use(express.json());
 app.use(bodyParser.urlencoded({extended:true}))
 app.use(cors())
