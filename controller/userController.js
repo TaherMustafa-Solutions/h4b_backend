@@ -96,7 +96,7 @@ catch(err){
 }
 exports.userinfo=(req,res)=>{
     const userId=req.params.id
-    Order.find({userId,status:1}).populate('userId').then((data)=>{
+    Order.find({userId}).populate('userId').then((data)=>{
         if(data.length===0){
             let newspaper=0,magazine=0,cardboard=0,book=0,plastic=0,aluminum=0,iron=0,paper=0;
            User.find({_id:userId}).select("name address email mobile phone_no").then((data1)=>{
